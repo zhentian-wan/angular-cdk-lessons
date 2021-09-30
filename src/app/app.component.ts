@@ -1,11 +1,16 @@
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { DialogComponent } from './overlay-example/dialog/dialog.component';
-import { Component, OnInit } from '@angular/core';
-import { Overlay, OverlayPositionBuilder } from '@angular/cdk/overlay';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ConnectedPosition,
+  Overlay,
+  OverlayPositionBuilder,
+} from '@angular/cdk/overlay';
 import { ComponentPortal } from '@angular/cdk/portal';
 import { Platform } from '@angular/cdk/platform';
 import { map } from 'rxjs/operators';
+import { DropDownSearchComponent } from './overlay-example/drop-down-search/drop-down-search.component';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +20,8 @@ import { map } from 'rxjs/operators';
 export class AppComponent implements OnInit {
   title = 'angular-cdk-lessons';
   isWideScreen$: Observable<boolean>;
+  @ViewChild(DropDownSearchComponent, { read: ElementRef, static: true })
+  dropdown;
 
   constructor(
     private overly: Overlay,
@@ -39,6 +46,19 @@ export class AppComponent implements OnInit {
         .global()
         .centerHorizontally()
         .centerVertically(),
+      // .flexibleConnectedTo(this.dropdown)
+      // .withPositions([
+      //   {
+      //     // here, top-left of the overlay is connected to bottom-left of the origin;
+      //     // of course, you can change this object or generate it dynamically;
+      //     // moreover, you can specify multiple objects in this array for CDK to find the most suitable option
+      //     originX: 'center',
+      //     originY: 'bottom',
+      //     overlayX: 'center',
+      //     overlayY: 'top',
+      //   } as ConnectedPosition,
+      // ])
+      // .withPush(false),
     });
     const dialogPortal = new ComponentPortal(DialogComponent);
     overlayRef.attach(dialogPortal);

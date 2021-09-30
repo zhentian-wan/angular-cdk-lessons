@@ -18,6 +18,7 @@
 <ng-template
   cdkConnectedOverlay
   cdkConnectedOverlayHasBackdrop
+  cdkConnectedOverlayBackdropClass="cdk-overlay-transparent-backdrop"
   [cdkConnectedOverlayScrollStrategy]="scrollStrategy"
   [cdkConnectedOverlayOrigin]="originOverlay"
   [cdkConnectedOverlayOpen]="showPanel$ | async"
@@ -34,7 +35,7 @@
       <mat-slide-toggle
         (change)="stateCtrl.disabled ? stateCtrl.enable() : stateCtrl.disable()"
         class="mat-caption"
-        style="margin-left: 1rem;"
+        style="margin-left: 1rem"
         >Disable search</mat-slide-toggle
       >
     </div>

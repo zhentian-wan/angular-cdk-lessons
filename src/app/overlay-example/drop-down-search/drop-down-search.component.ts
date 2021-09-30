@@ -45,27 +45,23 @@ export class DropDownSearchComponent implements OnInit {
     {
       name: 'Vienna',
       population: '1.897M',
-      flag:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Vienna.svg/800px-Flag_of_Vienna.svg.png',
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Vienna.svg/800px-Flag_of_Vienna.svg.png',
     },
     {
       name: 'Salzburg',
       population: '152.367K',
       // https://commons.wikimedia.org/wiki/File:Flag_of_California.svg
-      flag:
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Salzburg_%28state%29.svg/1280px-Flag_of_Salzburg_%28state%29.svg.png',
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/Flag_of_Salzburg_%28state%29.svg/1280px-Flag_of_Salzburg_%28state%29.svg.png',
     },
     {
       name: 'Kiev',
       population: '2.884M',
-      flag:
-        'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kyiv_Kurovskyi.svg',
+      flag: 'https://upload.wikimedia.org/wikipedia/commons/3/35/Flag_of_Kyiv_Kurovskyi.svg',
     },
     {
       name: 'Novopskov',
       population: '9,891K',
-      flag:
-        '//upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Flag_of_Novopskovskiy_Raion_in_Luhansk_Oblast.png/100px-Flag_of_Novopskovskiy_Raion_in_Luhansk_Oblast.png',
+      flag: '//upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Flag_of_Novopskovskiy_Raion_in_Luhansk_Oblast.png/100px-Flag_of_Novopskovskiy_Raion_in_Luhansk_Oblast.png',
     },
   ];
   stateCtrl = new FormControl();
@@ -106,6 +102,18 @@ export class DropDownSearchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    /*const onEscClick$ = this.connectedOverlay.overlayKeydown.pipe(
+      filter(({ keyCode }) => {
+        return keyCode === ESCAPE;
+      })
+    );*/
+
+    // this.scrollStrategy = new ConfirmScrollStrategy(this.inputEl);
+    // this.scrollStrategy = this.scrollStrategies.block();
+    // this.scrollStrategy = this.scrollStrategies.close({
+    //   threshold: 50,
+    // });
+    this.scrollStrategy = this.scrollStrategies.reposition();
     this.scrollStrategy = new ConfirmScrollStrategy(this.inputEl);
 
     this.isPanelVisible$ = this.focusMonitor.monitor(this.inputEl).pipe(
@@ -113,11 +121,15 @@ export class DropDownSearchComponent implements OnInit {
       mapTo(true)
     );
     this.isOverlayDetached$ = this.isPanelVisible$.pipe(
+      // add async behavior with delay, so element will be available
       delay(0),
       switchMap(() =>
         iif(
+          // is overlayRef element exist
           () => !!this.connectedOverlay.overlayRef,
+          // if it is, then detach
           this.connectedOverlay.overlayRef.detachments(),
+          // otherwise do nothing
           EMPTY
         )
       )
