@@ -109,6 +109,7 @@ export class DropDownSearchComponent implements OnInit {
     );*/
 
     // this.scrollStrategy = new ConfirmScrollStrategy(this.inputEl);
+    // this.scrollStrategy = this.scrollStrategies.none()
     // this.scrollStrategy = this.scrollStrategies.block();
     // this.scrollStrategy = this.scrollStrategies.close({
     //   threshold: 50,
